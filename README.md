@@ -27,11 +27,11 @@ A Scala / functional programming case study based.
     - handles parse errors gracefully;
     - doesn't use exceptions or `nulls`!
 
-Tips for the postfix parser:
+## Tips for the postfix parser
 
-- Postfix expressions put the parameters first and the operators last.
-  They are interesting because you don't need parentheses to show precedence
-  (like you do with normal infix expressions). For example:
+Postfix expressions put the parameters first and the operators last.
+They are interesting because you don't need parentheses to show precedence
+(like you do with normal infix expressions). For example:
 
 ~~~
 POSTFIX                   INFIX
@@ -40,6 +40,14 @@ POSTFIX                   INFIX
 1 2 + 3 4 + *             (1 + 2) * (3 + 4)
 ~~~
 
-- You can parse postfix expressions easily using two stacks:
-  one of operands and one of operators.
-  Use the `List` data type in Scala to represent stacks.
+You can parse postfix expressions easily using an expression stack:
+
+ - parse the text word-by-word from left to right;
+ - every time you pass a number:
+    - push it onto the stack;
+ - every time you pass an operator:
+    - pop two expressions from the stack;
+    - combine them;
+    - push the resulting expression onto the stack.
+ - when you come to the end, you should have
+   exactly one expression on the stack: your final result.
